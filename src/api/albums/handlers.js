@@ -1,4 +1,4 @@
-export class AlbumHandler {
+export class AlbumsHandler {
     #service;
     #validator;
     constructor(service, validator) {

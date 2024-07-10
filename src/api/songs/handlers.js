@@ -1,4 +1,4 @@
-export class SongHandler {
+export class SongsHandler {
     #service;
     #validator;
     constructor(service, validator) {
