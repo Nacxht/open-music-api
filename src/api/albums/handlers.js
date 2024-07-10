@@ -1,24 +1,24 @@
 export class AlbumsHandler {
-    #service;
-    #validator;
-    constructor(service, validator) {
-        this.#service = service;
-        this.#validator = validator;
-    }
+  #service
+  #validator
+  constructor (service, validator) {
+    this.#service = service
+    this.#validator = validator
+  }
 
-    async postAlbumHandler() {
-        //
-    }
+  async postAlbumHandler () {
+    //
+  }
 
-    async getAlbumByIdHandler() {
-        //
-    }
+  async getAlbumByIdHandler () {
+    //
+  }
 
-    async putAlbumByIdHandler() {
-        //
-    }
+  async putAlbumByIdHandler () {
+    //
+  }
 
-    async deleteAlbumByIdHandler() {
-        //
-    }
+  async deleteAlbumByIdHandler () {
+    //
+  }
 }

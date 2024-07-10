@@ -1,28 +1,28 @@
 export class SongsHandler {
-    #service;
-    #validator;
-    constructor(service, validator) {
-        this.#service = service;
-        this.#validator = validator;
-    }
+  #service
+  #validator
+  constructor (service, validator) {
+    this.#service = service
+    this.#validator = validator
+  }
 
-    async postSongHandler() {
-        //
-    }
+  async postSongHandler () {
+    //
+  }
 
-    async getAllSongsHandler() {
-        //
-    }
+  async getAllSongsHandler () {
+    //
+  }
 
-    async getSongByIdHandler() {
-        //
-    }
+  async getSongByIdHandler () {
+    //
+  }
 
-    async putSongByIdHandler() {
-        //
-    }
+  async putSongByIdHandler () {
+    //
+  }
 
-    async deleteSongByIdHandler() {
-        //
-    }
+  async deleteSongByIdHandler () {
+    //
+  }
 }

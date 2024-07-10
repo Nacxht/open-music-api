@@ -1,34 +1,34 @@
-import Hapi from "@hapi/hapi";
+import Hapi from '@hapi/hapi'
 
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from 'dotenv'
+dotenv.config()
 
-async function main() {
-    // Create server
-    const server = Hapi.server({
-        port: process.env.PORT,
-        host: process.env.HOST,
-        routes: {
-            cors: {
-                origin: ["*"],
-            },
-        },
-    });
+async function main () {
+  // Create server
+  const server = Hapi.server({
+    port: process.env.PORT,
+    host: process.env.HOST,
+    routes: {
+      cors: {
+        origin: ['*']
+      }
+    }
+  })
 
-    // Register plugins
-    await server.register({
-        //
-    });
+  // Register plugins
+  await server.register({
+    //
+  })
 
-    // PreResponse
-    server.ext("onPreResponse", (request, h) => {
-        //
-    });
+  // PreResponse
+  server.ext('onPreRes    ponse', (request, h) => {
+    //
+  })
 
-    // Start server
-    server
-        .start()
-        .then(() => console.log(`Server dijalankan pada ${server.info.uri}`));
+  // Start server
+  server
+    .start()
+    .then(() => console.log(`Server dijalankan pada ${server.info.uri}`))
 }
 
-main();
+main()
