@@ -1,3 +1,4 @@
+import { InvariantError } from "../../exceptions/InvariantError";
 import { albumPayloadSchema } from "./schema";
 
 export const albumValidator = {
@@ -5,7 +6,7 @@ export const albumValidator = {
         const { error } = albumPayloadSchema.validate(payload);
 
         if (error) {
-            // Exception
+            throw new InvariantError(error.message);
         }
     },
 };
