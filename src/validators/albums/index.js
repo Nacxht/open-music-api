@@ -1,7 +1,7 @@
-import { InvariantError } from "../../exceptions/InvariantError";
+import { InvariantError } from "../../exceptions/InvariantError.js";
 import { albumPayloadSchema } from "./schema";
 
-export const albumValidator = {
+export const albumsValidator = {
     validateAlbumPayload: (payload) => {
         const { error } = albumPayloadSchema.validate(payload);
 
