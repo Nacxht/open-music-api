@@ -10,7 +10,7 @@ export class AlbumsService {
   }
 
   async addAlbum ({ name, year }) {
-    const id = `albums-${nanoid(16)}`
+    const id = `album-${nanoid(16)}`
 
     const query = {
       text: 'INSERT INTO albums VALUES($1, $2, $3) RETURNING id',
@@ -34,8 +34,8 @@ export class AlbumsService {
 
     const result = await this.#pool.query(query)
 
-    if (!result.rows[0].id) {
-      throw new InvariantError('Album tidak ditemukan')
+    if (!result.rows.length) {
+      throw new NotFoundError('Album tidak ditemukan')
     }
 
     return result.rows
@@ -43,7 +43,7 @@ export class AlbumsService {
 
   async editAlbumById (id, { name, year }) {
     const query = {
-      text: 'UPDATE album SET name = $1, year = $2 WHERE id = $3 RETURNING id',
+      text: 'UPDATE albums SET name = $1, year = $2 WHERE id = $3 RETURNING id',
       values: [name, year, id]
     }
 
@@ -56,7 +56,7 @@ export class AlbumsService {
 
   async deleteAlbumById (id) {
     const query = {
-      text: 'DELETE FROM album WHERE id = $1 RETURNING id',
+      text: 'DELETE FROM albums WHERE id = $1 RETURNING id',
       values: [id]
     }
 
