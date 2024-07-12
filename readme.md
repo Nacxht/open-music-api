@@ -1,9 +1,15 @@
 # Commands
 - Start Server
-```npm run start```
+```bash
+npm run start
+```
 
 - Run Test (Via Newman)
-```npm run test```
+```bash
+npm run test
+```
 
 - Run Linter
-```npm run lint```
+```bash
+npm run lint
+```
