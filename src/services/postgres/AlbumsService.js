@@ -1,7 +1,10 @@
 import { nanoid } from 'nanoid'
-import { Pool } from 'pg'
 import { InvariantError } from '../../exceptions/InvariantError.js'
 import { NotFoundError } from '../../exceptions/NotFoundError.js'
+import { albumDetailMapper } from '../../utils/DBMapper.js'
+
+import pg from 'pg'
+const { Pool } = pg
 
 export class AlbumsService {
   #pool
@@ -14,7 +17,7 @@ export class AlbumsService {
 
     const query = {
       text: 'INSERT INTO albums VALUES($1, $2, $3) RETURNING id',
-      values: [id, name]
+      values: [id, name, year]
     }
 
     const result = await this.#pool.query(query)
@@ -28,7 +31,7 @@ export class AlbumsService {
 
   async getAlbumById (id) {
     const query = {
-      text: 'SELECT * FROM albums WHERE id = $1',
+      text: 'SELECT albums.id AS album_id, albums.name AS album_name, albums.year AS album_year, songs.id AS song_id, songs.title AS song_title, songs.performer AS song_performer FROM albums LEFT JOIN songs ON albums.id = songs.album_id WHERE albums.id = $1',
       values: [id]
     }
 
@@ -38,7 +41,7 @@ export class AlbumsService {
       throw new NotFoundError('Album tidak ditemukan')
     }
 
-    return result.rows
+    return albumDetailMapper(result.rows)
   }
 
   async editAlbumById (id, { name, year }) {
