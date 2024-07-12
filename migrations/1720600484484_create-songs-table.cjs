@@ -28,15 +28,11 @@ exports.up = (pgm) => {
     duration: {
       type: 'INTEGER'
     },
-    albumId: {
+    album_id: {
       type: 'VARCHAR(50)',
       references: 'albums(id)',
       onDelete: 'CASCADE'
     }
-  })
-
-  pgm.createConstraint('songs', 'fk_album_id', {
-    foreignKeys: { columns: 'albumId', references: 'albums' }
   })
 }
 
