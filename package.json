@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./src/server.js",
     "lint": "npx eslint ./src",
-    "migrate": "npx node-pg-migrate"
+    "migrate": "npx node-pg-migrate",
+    "test": "npx newman run postman/\"Open Music API V1 Test\".postman_collection.json --environment postman/\"OpenMusic API Test\".postman_environment.json"
   },
   "keywords": [],
   "author": "",
