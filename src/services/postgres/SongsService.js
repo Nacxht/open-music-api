@@ -49,7 +49,7 @@ export class SongsService {
 
     const result = await this.#pool.query(query)
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Lagu tidak ditemukan')
     }
 
@@ -69,7 +69,7 @@ export class SongsService {
 
     const result = await this.#pool.query(query).catch((error) => console.log(error))
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan')
     }
   }
@@ -82,7 +82,7 @@ export class SongsService {
 
     const result = await this.#pool.query(query)
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Gagal menghapus lagu. Id tidak ditemukan')
     }
   }
