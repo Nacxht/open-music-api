@@ -1,7 +1,10 @@
 /**
  * @typedef {import('./handlers').UsersHandler} UsersHandler
- *
- * @param {UsersHandler} handler
+ * @typedef {import('@hapi/hapi').ServerRoute} Route
+*/
+
+/**
+ * @type {(handler: UsersHandler) => Route[]}
 */
 export const routes = (handler) => [
   {

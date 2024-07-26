@@ -1,3 +1,18 @@
+/**
+ * @typedef {import('../../services/postgres/AuthenticationsService').AuthenticationsService} AuthenticationService
+ * @typedef {import('../../validators/authentications/index').AuthenticationValidator} AuthenticationValidator
+ * @typedef {import('../../services/postgres/UsersService').UsersService} UsersService
+ * @typedef {import('../../utils/TokenManager').TokenManager} TokenManager
+*/
+
+/**
+ * @typedef {import('@hapi/hapi').Request} Request
+ * @typedef {import('@hapi/hapi').ResponseToolkit} ResponseToolkit
+ * @typedef {import('@hapi/hapi').ResponseObject} ResponseObject
+ *
+ * @typedef {(request: Request, h: ResponseToolkit) => ResponseObject} MethodHandler
+*/
+
 export class AuthenticationsHandler {
   #authenticationService
   #usersService
@@ -5,11 +20,6 @@ export class AuthenticationsHandler {
   #validator
 
   /**
-   * @typedef {import('../../services/postgres/AuthenticationsService').AuthenticationsService} AuthenticationService
-   * @typedef {import('../../services/postgres/UsersService').UsersService} UsersService
-   * @typedef {import('../../utils/TokenManager').TokenManager} TokenManager
-   * @typedef {import('../../validators/authentications/index').AuthenticationValidator} AuthenticationValidator
-   *
    * @param {AuthenticationService} authenticationService
    * @param {UsersService} usersService
    * @param {TokenManager} tokenManager
@@ -22,6 +32,9 @@ export class AuthenticationsHandler {
     this.#validator = validator
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async postAuthenticationHandler (request, h) {
     this.#validator.validatePostAuthenticationPayload(request.payload)
 
@@ -48,6 +61,9 @@ export class AuthenticationsHandler {
     return response
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async putAuthenticationHandler (request, h) {
     this.#validator.validatePutAuthenticationPayload(request.payload)
 
@@ -66,6 +82,9 @@ export class AuthenticationsHandler {
     }
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async deleteAuthenticationHandler (request, h) {
     this.#validator.validateDeleteAuthenticationPayload(request.payload)
     const { refreshToken } = request.payload

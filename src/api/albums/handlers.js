@@ -1,11 +1,31 @@
+/**
+  * @typedef {import('../../services/postgres/AlbumsService').AlbumsService} AlbumsService
+  * @typedef {import('../../validators/albums/index').AlbumsValidator} AlbumsValidator
+*/
+
+/**
+ * @typedef {import('@hapi/hapi').Request} Request
+ * @typedef {import('@hapi/hapi').ResponseToolkit} ResponseToolkit
+ * @typedef {import('@hapi/hapi').ResponseObject} ResponseObject
+ *
+ * @typedef {(request: Request, h: ResponseToolkit) => ResponseObject} MethodHandler
+*/
 export class AlbumsHandler {
   #service
   #validator
+
+  /**
+   * @param {AlbumsService} service
+   * @param {AlbumsValidator} validator
+  */
   constructor (service, validator) {
     this.#service = service
     this.#validator = validator
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async postAlbumHandler (request, h) {
     this.#validator.validateAlbumPayload(request.payload)
     const albumId = await this.#service.addAlbum(request.payload)
@@ -21,6 +41,9 @@ export class AlbumsHandler {
     return response
   }
 
+  /**
+   * @type
+  */
   async getAlbumByIdHandler (request) {
     const { id } = request.params
     const album = await this.#service.getAlbumById(id)

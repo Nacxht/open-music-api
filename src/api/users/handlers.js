@@ -1,19 +1,32 @@
+/**
+ * @typedef {import('../../services/postgres/UsersService').UsersService} UsersService
+ * @typedef {import('../../validators/users/index').UsersValidator} UsersValidator
+*/
+
+/**
+ * @typedef {import('@hapi/hapi').Request} Request
+ * @typedef {import('@hapi/hapi').ResponseToolkit} ResponseToolkit
+ * @typedef {import('@hapi/hapi').ResponseObject} ResponseObject
+ *
+ * @typedef {(request: Request, h: ResponseToolkit) => ResponseObject} MethodHandler
+*/
+
 export class UsersHandler {
   #service
   #validator
 
   /**
-     * @typedef {import('../../services/postgres/UsersService').UsersService} UsersService
-     * @typedef {import('../../validators/users/index').UsersValidator} UsersValidator
-     *
-     * @param {UsersService} service
-     * @param {UsersValidator} validator
-    */
+   * @param {UsersService} service
+   * @param {UsersValidator} validator
+  */
   constructor (service, validator) {
     this.#service = service
     this.#validator = validator
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async postUserHandler (request, h) {
     this.#validator.validateUserPayload(request.payload)
     const { username, password, fullname } = request.payload

@@ -11,6 +11,10 @@ export class CollaborationsService {
     this.#pool = new Pool()
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} userId
+  */
   async addCollaborator (playlistId, userId) {
     const id = `collaboration-${nanoid(16)}`
 
@@ -28,6 +32,10 @@ export class CollaborationsService {
     return result.rows[0].id
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} userId
+  */
   async deleteCollaborator (playlistId, userId) {
     const query = {
       text: 'DELETE FROM collaborations WHERE playlist_id = $1 AND user_id = $2',
@@ -41,6 +49,10 @@ export class CollaborationsService {
     }
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} userId
+  */
   async verifyCollaborator (playlistId, userId) {
     const query = {
       text: 'SELECT * FROM collaborations WHERE playlist_id = $1 AND user_id = $2',

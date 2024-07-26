@@ -9,6 +9,9 @@ export class AuthenticationsService {
     this.#pool = new Pool()
   }
 
+  /**
+   * @param {string} token
+  */
   async addRefreshToken (token) {
     const query = {
       text: 'INSERT INTO authentications VALUES($1)',
@@ -18,6 +21,9 @@ export class AuthenticationsService {
     await this.#pool.query(query)
   }
 
+  /**
+   * @param {string} token
+  */
   async verifyRefreshToken (token) {
     const query = {
       text: 'SELECT token FROM authentications WHERE token = $1',
@@ -31,6 +37,9 @@ export class AuthenticationsService {
     }
   }
 
+  /**
+   * @param {string} token
+  */
   async deleteRefreshToken (token) {
     const query = {
       text: 'DELETE FROM authentications WHERE token = $1',

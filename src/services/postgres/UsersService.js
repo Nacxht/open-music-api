@@ -13,6 +13,12 @@ export class UsersService {
     this.#pool = new Pool()
   }
 
+  /**
+   * @param {object} payload
+   * @param {string} payload.username
+   * @param {string} payload.password
+   * @param {string} payload.fullname
+  */
   async addUser ({ username, password, fullname }) {
     await this.verifyUsername(username)
 
@@ -33,6 +39,9 @@ export class UsersService {
     return result.rows[0].id
   }
 
+  /**
+   * @param {string} username
+  */
   async verifyUsername (username) {
     const query = {
       text: 'SELECT username FROM users WHERE username = $1',
@@ -46,6 +55,9 @@ export class UsersService {
     }
   }
 
+  /**
+   * @param {string} userId
+  */
   async verifyUserId (userId) {
     const query = {
       text: 'SELECT id FROM users WHERE id = $1',
@@ -59,6 +71,10 @@ export class UsersService {
     }
   }
 
+  /**
+   * @param {string} username
+   * @param {string} password
+  */
   async verifyUserCredentials (username, password) {
     const query = {
       text: 'SELECT id, password FROM users WHERE username = $1 ',

@@ -1,13 +1,23 @@
+/**
+ * @typedef {import('../../services/postgres/PlaylistsService').PlaylistsService} PlaylistsService
+ * @typedef {import('../../services/postgres/SongsService').SongsService} SongsService
+ * @typedef {import('../../validators/playlists/index').PlaylistsValidator} PlaylistsValidator
+*/
+
+/**
+ * @typedef {import('@hapi/hapi').Request} Request
+ * @typedef {import('@hapi/hapi').ResponseToolkit} ResponseToolkit
+ * @typedef {import('@hapi/hapi').ResponseObject} ResponseObject
+ *
+ * @typedef {(request: Request, h: ResponseToolkit) => ResponseObject} MethodHandler
+*/
+
 export class PlaylistsHandler {
   #playlistsService
   #songsService
   #validator
 
   /**
-   * @typedef {import('../../services/postgres/PlaylistsService').PlaylistsService} PlaylistsService
-   * @typedef {import('../../services/postgres/SongsService').SongsService} SongsService
-   * @typedef {import('../../validators/playlists/index').PlaylistsValidator} PlaylistsValidator
-   *
    * @param {PlaylistsService} playlistsService
    * @param {SongsService} songsService
    * @param {PlaylistsValidator} validator
@@ -18,6 +28,9 @@ export class PlaylistsHandler {
     this.#validator = validator
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async postPlaylistHandler (request, h) {
     this.#validator.validatePlaylistPayload(request.payload)
 
@@ -36,6 +49,9 @@ export class PlaylistsHandler {
     return response
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async getPlaylistsHandler (request, h) {
     const { id: credentialId } = request.auth.credentials
     const playlists = await this.#playlistsService.getPlaylists(credentialId)
@@ -48,6 +64,9 @@ export class PlaylistsHandler {
     }
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async deletePlaylistByIdHandler (request, h) {
     const { id } = request.params
     const { id: credentialId } = request.auth.credentials
@@ -61,6 +80,9 @@ export class PlaylistsHandler {
     }
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async postPlaylistSongHandler (request, h) {
     const { id: playlistId } = request.params
     const { id: credentialId } = request.auth.credentials
@@ -81,6 +103,9 @@ export class PlaylistsHandler {
     return response
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async getPlaylistSongsByPlaylistIdHandler (request, h) {
     const { id: playlistId } = request.params
     const { id: credentialId } = request.auth.credentials
@@ -96,6 +121,9 @@ export class PlaylistsHandler {
     }
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async deletePlaylistSongByIdHandler (request, h) {
     const { id: playlistId } = request.params
     const { id: credentialId } = request.auth.credentials
@@ -113,6 +141,9 @@ export class PlaylistsHandler {
     }
   }
 
+  /**
+   * @type {MethodHandler}
+  */
   async getPlaylistActivitesByPlaylistIdHandler (request, h) {
     const { id: playlistId } = request.params
     const { id: credentialId } = request.auth.credentials

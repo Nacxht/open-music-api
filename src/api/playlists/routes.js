@@ -1,7 +1,10 @@
 /**
  * @typedef {import('./handlers').PlaylistsHandler} PlaylistsHandler
- *
- * @param {PlaylistsHandler} handler
+ * @typedef {import('@hapi/hapi').ServerRoute} Route
+*/
+
+/**
+ * @type {(handler: PlaylistsHandler) => Route[]}
 */
 export const routes = (handler) => [
   {

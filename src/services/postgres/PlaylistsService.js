@@ -5,6 +5,10 @@ import { NotFoundError } from '../../exceptions/NotFoundError.js'
 import { AuthorizationError } from '../../exceptions/AuthorizationError.js'
 import { getPlaylistActivitiesMapper, getPlaylistsMapper, getPlaylistSongMapper } from '../../utils/DBMapper.js'
 
+/**
+ * @typedef {import('./CollaborationsService.js').CollaborationsService} CollaborationsService
+*/
+
 const { Pool } = pg
 
 export class PlaylistsService {
@@ -12,8 +16,6 @@ export class PlaylistsService {
   #collaborationsService
 
   /**
-   * @typedef {import('./CollaborationsService.js').CollaborationsService} CollaborationsService
-   *
    * @param {CollaborationsService} collaborationsService
   */
   constructor (collaborationsService) {
@@ -21,6 +23,10 @@ export class PlaylistsService {
     this.#collaborationsService = collaborationsService
   }
 
+  /**
+   * @param {string} ownerId
+   * @param {string} name
+  */
   async addPlaylist (ownerId, name) {
     const id = `playlist-${nanoid(16)}`
 
@@ -38,6 +44,9 @@ export class PlaylistsService {
     return result.rows[0].id
   }
 
+  /**
+   * @param {string} ownerId
+  */
   async getPlaylists (ownerId) {
     const query = {
       text: `SELECT playlists.id AS playlist_id,
@@ -54,6 +63,9 @@ export class PlaylistsService {
     return result.rows.map(getPlaylistsMapper)
   }
 
+  /**
+   * @param {string} playlistId
+  */
   async deletePlaylist (playlistId) {
     const query = {
       text: 'DELETE FROM playlists WHERE id = $1 RETURNING id',
@@ -67,6 +79,10 @@ export class PlaylistsService {
     }
   }
 
+  /**
+   * @param {string} songId
+   * @param {string} playlistId
+  */
   async addSongToPlaylist (playlistId, songId) {
     const id = `playlist-songs-${nanoid(16)}`
 
@@ -82,6 +98,9 @@ export class PlaylistsService {
     }
   }
 
+  /**
+   * @param {string} playlistId
+  */
   async getPlaylistSongsByPlaylistId (playlistId) {
     const query = {
       text: `SELECT
@@ -105,6 +124,9 @@ export class PlaylistsService {
     return getPlaylistSongMapper(result.rows)
   }
 
+  /**
+   * @param {string} songId
+  */
   async deletePlaylistSongById (songId) {
     const query = {
       text: 'DELETE FROM playlist_songs WHERE song_id = $1 RETURNING id',
@@ -118,6 +140,12 @@ export class PlaylistsService {
     }
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} userId
+   * @param {string} songId
+   * @param {string} action
+  */
   async addPlaylistActivities (playlistId, userId, songId, action) {
     const id = `playlist-activities-${nanoid(16)}`
     const timestamptz = await this.#pool.query(
@@ -139,6 +167,9 @@ export class PlaylistsService {
     }
   }
 
+  /**
+   * @param {string} playlistId
+  */
   async getPlaylistActivitiesByPlaylistId (playlistId) {
     const query = {
       text: `SELECT
@@ -160,6 +191,10 @@ export class PlaylistsService {
     return result.rows.length ? result.rows.map(getPlaylistActivitiesMapper) : []
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} ownerId
+  */
   async verifyPlaylistsOwner (playlistId, ownerId) {
     const query = {
       text: 'SELECT * FROM playlists WHERE id = $1',
@@ -179,6 +214,10 @@ export class PlaylistsService {
     }
   }
 
+  /**
+   * @param {string} playlistId
+   * @param {string} userId
+  */
   async verifyPlaylistAccess (playlistId, userId) {
     try {
       await this.verifyPlaylistsOwner(playlistId, userId)

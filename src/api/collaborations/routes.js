@@ -1,7 +1,10 @@
 /**
  * @typedef {import('./handlers').CollaborationsHandler} CollaborationsHandler
- *
- * @param {CollaborationsHandler} handler
+ * @typedef {import('@hapi/hapi').ServerRoute} Route
+*/
+
+/**
+ * @type {(handler: CollaborationsHandler) => Route[]}
 */
 export const routes = (handler) => [
   {

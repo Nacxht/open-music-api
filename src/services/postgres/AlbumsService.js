@@ -12,6 +12,11 @@ export class AlbumsService {
     this.#pool = new Pool()
   }
 
+  /**
+   * @param {object} payload
+   * @param {string} payload.name
+   * @param {number} payload.year
+  */
   async addAlbum ({ name, year }) {
     const id = `album-${nanoid(16)}`
 
@@ -29,6 +34,9 @@ export class AlbumsService {
     return result.rows[0].id
   }
 
+  /**
+   * @param {string} id
+  */
   async getAlbumById (id) {
     const query = {
       text: 'SELECT albums.id AS album_id, albums.name AS album_name, albums.year AS album_year, songs.id AS song_id, songs.title AS song_title, songs.performer AS song_performer FROM albums LEFT JOIN songs ON albums.id = songs.album_id WHERE albums.id = $1',
@@ -44,6 +52,12 @@ export class AlbumsService {
     return albumDetailMapper(result.rows)
   }
 
+  /**
+   * @param {string} id
+   * @param {object} payload
+   * @param {string} payload.name
+   * @param {number} payload.year
+  */
   async editAlbumById (id, { name, year }) {
     const query = {
       text: 'UPDATE albums SET name = $1, year = $2 WHERE id = $3 RETURNING id',
@@ -57,6 +71,9 @@ export class AlbumsService {
     }
   }
 
+  /**
+   * @param {string} id
+  */
   async deleteAlbumById (id) {
     const query = {
       text: 'DELETE FROM albums WHERE id = $1 RETURNING id',

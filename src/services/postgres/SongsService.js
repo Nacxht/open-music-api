@@ -1,8 +1,8 @@
+import pg from 'pg'
 import { nanoid } from 'nanoid'
 import { InvariantError } from '../../exceptions/InvariantError.js'
 import { NotFoundError } from '../../exceptions/NotFoundError.js'
 
-import pg from 'pg'
 const { Pool } = pg
 
 export class SongsService {
@@ -11,6 +11,15 @@ export class SongsService {
     this.#pool = new Pool()
   }
 
+  /**
+   * @param {object} payload
+   * @param {string} payload.title
+   * @param {number} payload.year
+   * @param {string} payload.genre
+   * @param {string} payload.performer
+   * @param {number} payload.duration
+   * @param {string} payload.albumId
+  */
   async addSong ({ title, year, genre, performer, duration, albumId }) {
     const id = `song-${nanoid(16)}`
 
@@ -28,6 +37,10 @@ export class SongsService {
     return result.rows[0].id
   }
 
+  /**
+   * @param {string} performer
+   * @param {string} title
+  */
   async getSongs (title, performer) {
     const query = title || performer
       ? {
@@ -41,6 +54,9 @@ export class SongsService {
     return result.rows
   }
 
+  /**
+   * @param {string} id
+  */
   async getSongById (id) {
     const query = {
       text: 'SELECT * FROM songs WHERE id = $1',
@@ -56,6 +72,9 @@ export class SongsService {
     return result.rows[0]
   }
 
+  /**
+   * @param {string} id
+  */
   async editSongById (id, { title, year, genre, performer, duration, albumId }) {
     const query = albumId
       ? {
@@ -74,6 +93,9 @@ export class SongsService {
     }
   }
 
+  /**
+   * @param {string} id
+  */
   async deleteSongById (id) {
     const query = {
       text: 'DELETE FROM songs WHERE id = $1 RETURNING id',
@@ -87,6 +109,9 @@ export class SongsService {
     }
   }
 
+  /**
+   * @param {string} songId
+  */
   async verifySong (songId) {
     const query = {
       text: 'SELECT * FROM songs WHERE id = $1',

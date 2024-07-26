@@ -6,14 +6,14 @@ import {
 } from './schema.js'
 
 /**
- * @typedef {Object} AuthenticationValidator
+ * @typedef {object} AuthenticationsValidator
  * @property {(payload: object) => void} validatePostAuthenticationPayload
  * @property {(payload: object) => void} validatePutAuthenticationPayload
  * @property {(payload: object) => void} validateDeleteAuthenticationPayload
 */
 
 /**
- * @type {AuthenticationValidator}
+ * @type {AuthenticationsValidator}
 */
 export const authenticationsValidator = {
   validatePostAuthenticationPayload: (payload) => {

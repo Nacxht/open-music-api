@@ -1,3 +1,11 @@
+/**
+ * @typedef {import('./handlers').AlbumsHandler} AlbumsHandler
+ * @typedef {import('@hapi/hapi').ServerRoute} Route
+*/
+
+/**
+ * @type {(handler: AlbumsHandler) => Route[]}
+*/
 export const routes = (handler) => [
   {
     method: 'POST',
