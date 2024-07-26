@@ -6,7 +6,7 @@
     "start": "node ./src/server.js",
     "lint": "npx eslint ./src",
     "migrate": "npx node-pg-migrate",
-    "test": "npx newman run postman/\"Open Music API V1 Test\".postman_collection.json --environment postman/\"OpenMusic API Test\".postman_environment.json"
+    "test": "npx newman run postman/\"Open Music API V2 Test\".postman_collection.json --environment postman/\"OpenMusic API Test\".postman_environment.json"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.10",
+    "@hapi/jwt": "^3.2.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "joi": "^17.13.3",
     "nanoid": "^5.0.7",
